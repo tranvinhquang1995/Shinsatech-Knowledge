@@ -20,11 +20,11 @@ def fetch_gamegate_data(sheet_url: str) -> str:
         return f"Error Fetching GameGate Data: {str(e)}"
 
 def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
-    """
-    Xử lý LLM cho team GameGate với strict context.
-    """
+    # Khởi tạo model Gemini 3.6 Flash để tối ưu hóa việc phân tích quy trình
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-3.6-flash')
+    
+    # ... (Giữ nguyên toàn bộ phần System Prompt và Exception handling cũ) ...
     
     system_prompt = f"""
     Bạn là một trợ lý ảo QA/QC chuyên trách hỗ trợ ĐỘC QUYỀN cho TEAM GAMEGATE (dự án Web/App Game Cocos).
