@@ -1,0 +1,49 @@
+import pandas as pd
+import google.generativeai as genai
+
+def fetch_btc_data(sheet_url: str) -> str:
+    """
+    Fetch quy trình của Team BTC. 
+    Lưu ý: URL truyền vào phải trỏ đúng GID (Sheet ID) của tab BTC.
+    """
+    try:
+        csv_export_url = sheet_url.replace('/edit?usp=sharing', '/export?format=csv')
+        csv_export_url = csv_export_url.replace('/edit', '/export?format=csv')
+        
+        df = pd.read_csv(csv_export_url)
+        df.dropna(how='all', inplace=True)
+        
+        context_text = "TÀI LIỆU QUY TRÌNH LÀM VIỆC - TEAM BTC:\n\n"
+        context_text += df.to_string(index=False)
+        return context_text
+    except Exception as e:
+        return f"Error Fetching BTC Data: {str(e)}"
+
+def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
+    """
+    Xử lý LLM cho team BTC với strict context.
+    """
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    
+    system_prompt = f"""
+    Bạn là một trợ lý ảo QA/QC chuyên trách hỗ trợ ĐỘC QUYỀN cho TEAM BTC.
+    Bạn CHỈ ĐƯỢC PHÉP sử dụng thông tin trong phần [NGUỒN DỮ LIỆU BTC] dưới đây.
+    
+    [NGUỒN DỮ LIỆU BTC]:
+    {context}
+    
+    RULE BẮT BUỘC:
+    1. Phân tích ngữ nghĩa câu hỏi, đối chiếu với cột "Keywords" và "Standard Topic".
+    2. Trả lời chi tiết dựa trên "Detailed Process" và "Exceptions" của TEAM BTC. Format bằng bullet points rõ ràng.
+    3. Nếu câu hỏi KHÔNG THỂ match với bất kỳ data nào, TUYỆT ĐỐI KHÔNG SUY DIỄN. Bắt buộc trả lời đúng nguyên văn: "Thông tin này chưa được cập nhật, vui lòng liên hệ người quản lý".
+    """
+    
+    try:
+        response = model.generate_content(
+            f"{system_prompt}\n\nCâu hỏi của User: {user_question}",
+            generation_config=genai.types.GenerationConfig(temperature=0.1) 
+        )
+        return response.text
+    except Exception as e:
+        return f"System Error (BTC API): {str(e)}"
