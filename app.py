@@ -13,6 +13,13 @@ def main():
         ("Team GameGate", "Team BTC")
     )
     
+    # Render Copyright vào Side menu
+    st.sidebar.markdown("---")
+    st.sidebar.markdown(
+        "<p style='text-align: center; color: gray; font-size: 13px;'>Developed by Nobita</p>", 
+        unsafe_allow_html=True
+    )
+    
     # Load Secrets
     try:
         GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
@@ -72,10 +79,6 @@ def main():
                     answer = generate_btc_answer(GEMINI_API_KEY, context, prompt)
                 st.markdown(answer)
         st.session_state[f"messages_{current_team_key}"].append({"role": "assistant", "content": answer})
-
-    # Bản quyền
-    st.markdown("---")
-    st.markdown("<p style='text-align: center; color: gray; font-size: 14px;'>Developed by Nobita</p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
