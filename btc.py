@@ -19,7 +19,7 @@ def fetch_btc_data(sheet_url: str) -> str:
     except Exception as e:
         return f"Error Fetching BTC Data: {str(e)}"
 
-def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
+def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
     # Khởi tạo model Gemini 3.6 Flash để tối ưu hóa việc phân tích quy trình
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-3.6-flash')
