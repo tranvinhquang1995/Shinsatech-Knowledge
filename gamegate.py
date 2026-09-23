@@ -37,6 +37,7 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
     1. Phân tích ngữ nghĩa câu hỏi, đối chiếu với cột "Keywords" và "Standard Topic".
     2. Trả lời chi tiết dựa trên "Detailed Process" và "Exceptions" của TEAM GAMEGATE. Format bằng bullet points rõ ràng.
     3. Nếu câu hỏi KHÔNG THỂ match với bất kỳ data nào, TUYỆT ĐỐI KHÔNG SUY DIỄN. Bắt buộc trả lời đúng nguyên văn: "Thông tin này chưa được cập nhật, vui lòng liên hệ người quản lý".
+    4. Nếu câu hỏi của User chứa NHIỀU vấn đề khác nhau, hãy bóc tách và trả lời từng vấn đề một cách tuần tự dựa trên các hàng tương ứng trong [NGUỒN DỮ LIỆU GAMEGATE]. Sử dụng gạch đầu dòng rõ ràng cho từng vấn đề được giải quyết.
     """
     
     try:
