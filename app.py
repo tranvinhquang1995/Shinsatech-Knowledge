@@ -3,7 +3,7 @@ from gamegate import fetch_gamegate_data, generate_gamegate_answer
 from btc import fetch_btc_data, generate_btc_answer
 
 # Setup cấu hình trang
-st.set_page_config(page_title="QC Knowledge Base", page_icon="🛡️", layout="centered")
+st.set_page_config(page_title="Shinsa - QC Virtual Assistant", page_icon="🤖", layout="centered")
 
 def main():
     # Setup UI Sidebar (Routing)
@@ -46,8 +46,8 @@ def main():
         return fetch_btc_data(url)
 
     # Render Header
-    st.title(f"🤖 Trợ lý QC - {team_selection}")
-    st.markdown(f"Hệ thống truy vấn quy trình làm việc nội bộ dành riêng cho **{team_selection}**.")
+    st.title(f"🤖 Shinsa - Trợ lý Ảo của {team_selection}")
+    st.markdown(f"Xin chào! Tôi là **Shinsa**. Hãy hỏi tôi bất kỳ quy trình làm việc nội bộ nào của **{team_selection}**.")
     
     # Fetch Context Data tùy theo team được chọn
     with st.spinner(f"Đang đồng bộ dữ liệu từ {team_selection}..."):
@@ -66,7 +66,7 @@ def main():
             st.markdown(message["content"])
 
     # Xử lý User Input (Test Execution)
-    if prompt := st.chat_input(f"Hỏi tôi về quy trình của {team_selection}..."):
+    if prompt := st.chat_input(f"Trò chuyện với Shinsa về quy trình của {team_selection}..."):
         with st.chat_message("user"):
             st.markdown(prompt)
         st.session_state[f"messages_{current_team_key}"].append({"role": "user", "content": prompt})
