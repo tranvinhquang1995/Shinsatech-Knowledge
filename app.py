@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai
+import google.generativeai as genai
 from gamegate import fetch_gamegate_data, generate_gamegate_answer
 from btc import fetch_btc_data, generate_btc_answer
 
