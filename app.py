@@ -1,5 +1,4 @@
 import streamlit as st
-import google.generativeai as genai
 from gamegate import fetch_gamegate_data, generate_gamegate_answer
 from btc import fetch_btc_data, generate_btc_answer
 
@@ -29,31 +28,6 @@ def main():
     except KeyError:
         st.error("⚠️ Missing Configuration trong Streamlit Secrets!")
         st.stop()
-
-    # ---------------------------------------------------------
-    # QC DIAGNOSTIC TOOL: FETCH AVAILABLE MODELS
-    # Tác dụng: In ra UI danh sách các model mà API Key này THỰC SỰ hỗ trợ
-    # ---------------------------------------------------------
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("### 🔍 QC Diagnostic Info")
-    
-    try:
-        genai.configure(api_key=GEMINI_API_KEY)
-        supported_models = []
-        for m in genai.list_models():
-            # Chỉ lọc lấy các model có hỗ trợ generate text
-            if 'generateContent' in m.supported_generation_methods:
-                supported_models.append(f"`{m.name.replace('models/', '')}`")
-        
-        if supported_models:
-            st.sidebar.success("Models khả dụng:")
-            for sm in supported_models:
-                st.sidebar.markdown(f"- {sm}")
-        else:
-            st.sidebar.error("API Key này không có model nào hỗ trợ generateContent.")
-    except Exception as e:
-        st.sidebar.error(f"Lỗi fetch list model: {str(e)}")
-    # ---------------------------------------------------------
     
     # Xử lý State & Cache độc lập cho từng team để tránh Data mix-up
     current_team_key = "gamegate" if team_selection == "Team GameGate" else "btc"
