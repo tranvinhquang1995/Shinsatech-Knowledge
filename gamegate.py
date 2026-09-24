@@ -22,7 +22,8 @@ def fetch_gamegate_data(sheet_url: str) -> str:
 def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
     # Khởi tạo model Gemini 3.6 Flash để tối ưu hóa việc phân tích quy trình
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # model = genai.GenerativeModel('gemini-3.6-flash')
+    model = genai.GenerativeModel('gemini-1.5-flash-latest')
     
     # ... (Giữ nguyên toàn bộ phần System Prompt và Exception handling cũ) ...
     
