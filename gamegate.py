@@ -40,8 +40,6 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
     4. Nếu câu hỏi của User chứa NHIỀU vấn đề khác nhau, hãy bóc tách và trả lời từng vấn đề một cách tuần tự dựa trên các hàng tương ứng trong [NGUỒN DỮ LIỆU GAMEGATE]. Sử dụng gạch đầu dòng rõ ràng cho từng vấn đề được giải quyết.
     """
     
-    def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
-    # ... (Các cấu hình model và prompt giữ nguyên) ...
     try:
         response = model.generate_content(
             f"{system_prompt}\n\nCâu hỏi của User: {user_question}",
