@@ -44,7 +44,9 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
     
     system_prompt = f"""
     Bạn là Shinsa, trợ lý ảo của team GameGate.
-    Dưới đây là cơ sở dữ liệu quy trình làm việc (Knowledge Base) hiện tại của team:
+    Bạn CHỈ ĐƯỢC PHÉP sử dụng thông tin trong phần [NGUỒN DỮ LIỆU GAMEGATE] dưới đây.
+    
+    [NGUỒN DỮ LIỆU GAMEGATE]:
     {context}
     
     QUY TẮC PHẢN HỒI BẮT BUỘC (STRICT RULES):
