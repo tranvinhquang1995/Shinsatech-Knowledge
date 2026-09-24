@@ -46,4 +46,9 @@ def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
         )
         return response.text
     except Exception as e:
-        return f"System Error (BTC API): {str(e)}"
+        error_msg = str(e)
+        # Catch riêng lỗi Rate Limit (429) để báo cho user
+        if "429" in error_msg or "quota" in error_msg.lower():
+            return "⚠️ Shinsa đang tiếp nhận quá nhiều câu hỏi cùng lúc (Quá tải). Sếp vui lòng chờ khoảng 1 phút rồi hỏi lại nhé!"
+        # Catch các lỗi hệ thống khác
+        return f"System Error: Đã xảy ra lỗi kết nối. Detail: {error_msg}"
