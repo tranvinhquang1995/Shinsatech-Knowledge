@@ -40,6 +40,8 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
     4. Nếu câu hỏi của User chứa NHIỀU vấn đề khác nhau, hãy bóc tách và trả lời từng vấn đề một cách tuần tự dựa trên các hàng tương ứng trong [NGUỒN DỮ LIỆU GAMEGATE]. Sử dụng gạch đầu dòng rõ ràng cho từng vấn đề được giải quyết.
     """
     
+    def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
+    # ... (Các cấu hình model và prompt giữ nguyên) ...
     try:
         response = model.generate_content(
             f"{system_prompt}\n\nCâu hỏi của User: {user_question}",
@@ -47,4 +49,9 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
         )
         return response.text
     except Exception as e:
-        return f"System Error (GameGate API): {str(e)}"
+        error_msg = str(e)
+        # Catch riêng lỗi Rate Limit (429) để báo cho user
+        if "429" in error_msg or "quota" in error_msg.lower():
+            return "⚠️ Shinsa đang tiếp nhận quá nhiều câu hỏi cùng lúc (Quá tải). Bạn vui lòng chờ khoảng 1 phút rồi hỏi lại nhé!"
+        # Catch các lỗi hệ thống khác
+        return f"System Error: Đã xảy ra lỗi kết nối. Detail: {error_msg}"
