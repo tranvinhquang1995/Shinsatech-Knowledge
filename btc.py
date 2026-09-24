@@ -26,7 +26,7 @@ def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
     model = genai.GenerativeModel('gemini-flash-lite-latest')
     
     # ... (Giữ nguyên toàn bộ phần System Prompt và Exception handling cũ) ...
-    
+    '''
     system_prompt = f"""
     Bạn là một trợ lý ảo QA/QC chuyên trách hỗ trợ ĐỘC QUYỀN cho TEAM BTC.
     Bạn CHỈ ĐƯỢC PHÉP sử dụng thông tin trong phần [NGUỒN DỮ LIỆU BTC] dưới đây.
@@ -39,7 +39,21 @@ def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
     2. Trả lời chi tiết dựa trên "Detailed Process" và "Exceptions" của TEAM BTC. Format bằng bullet points rõ ràng.
     3. Nếu câu hỏi KHÔNG THỂ match với bất kỳ data nào, TUYỆT ĐỐI KHÔNG SUY DIỄN. Bắt buộc trả lời đúng nguyên văn: "Thông tin này chưa được cập nhật, vui lòng liên hệ người quản lý".
     """
+    '''
+
+    system_prompt = f"""
+    Bạn là Shinsa, trợ lý ảo của team BTC.
+    Bạn CHỈ ĐƯỢC PHÉP sử dụng thông tin trong phần [NGUỒN DỮ LIỆU BTC] dưới đây.
     
+    [NGUỒN DỮ LIỆU BTC]:
+    {context}
+    
+    QUY TẮC PHẢN HỒI BẮT BUỘC (STRICT RULES):
+    1. DỰA HOÀN TOÀN VÀO DỮ LIỆU: Chỉ sử dụng thông tin được cung cấp trong Knowledge Base bên trên để trả lời. Trả lời ngắn gọn, đúng trọng tâm.
+    2. SUY LUẬN LOGIC (NEGATIVE CASES): Nếu dữ liệu CÓ ĐỀ CẬP đến một danh sách hoặc quy định cụ thể (ví dụ: "danh sách cổng đang làm là 111, 112, 113"), và user hỏi về một đối tượng nằm ngoài danh sách đó (ví dụ: cổng 123), hãy trả lời rõ ràng dựa trên logic đó (ví dụ: "Theo dữ liệu hiện tại, team chỉ hỗ trợ các cổng 111, 112, 113, không bao gồm cổng 123").
+    3. XỬ LÝ DỮ LIỆU TRỐNG (OUT OF SCOPE): Nếu người dùng hỏi về một vấn đề, từ khóa, hoặc quy trình HOÀN TOÀN KHÔNG XUẤT HIỆN trong Knowledge Base bên trên, BẠN KHÔNG ĐƯỢC SUY ĐOÁN. Bạn BẮT BUỘC phải trả lời chính xác từng chữ câu sau: "Thông tin này Shinsa chưa được cập nhật, bạn vui lòng liên hệ người quản lý".
+    """
+
     try:
         response = model.generate_content(
             f"{system_prompt}\n\nCâu hỏi của User: {user_question}",
