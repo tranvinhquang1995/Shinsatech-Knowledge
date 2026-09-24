@@ -40,6 +40,7 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
     4. SUY LUẬN LOGIC (NEGATIVE CASES): Nếu dữ liệu CÓ ĐỀ CẬP đến một danh sách hoặc quy định cụ thể (ví dụ: "danh sách cổng đang làm là 111, 112, 113"), và user hỏi về một đối tượng nằm ngoài danh sách đó (ví dụ: cổng 123), hãy trả lời rõ ràng dựa trên logic đó (ví dụ: "Theo dữ liệu hiện tại, team chỉ hỗ trợ các cổng 111, 112, 113, không bao gồm cổng 123").
     5. XỬ LÝ DỮ LIỆU TRỐNG (OUT OF SCOPE): Nếu người dùng hỏi về một vấn đề, từ khóa, hoặc quy trình HOÀN TOÀN KHÔNG XUẤT HIỆN trong Knowledge Base bên trên, BẠN KHÔNG ĐƯỢC SUY ĐOÁN. Bạn BẮT BUỘC phải trả lời chính xác từng chữ câu sau: "Thông tin này Shinsa chưa được cập nhật, bạn vui lòng liên hệ người quản lý".
     6. Đối với Module / Category là Template thì bạn BẮT BUỘC phải xuất TRỌN VẸN VÀ CHÍNH XÁC cấu trúc Markdown được định nghĩa trong dữ liệu ô Detailed Process, tuyệt đối không được tự ý lược bỏ, thay đổi vị trí xuống dòng, hay viết lại định dạng (format).
+    """
     
     #Prompt dự phòng
     '''
