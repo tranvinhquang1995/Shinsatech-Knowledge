@@ -23,7 +23,7 @@ def generate_btc_answer(api_key: str, context: str, user_question: str) -> str:
     # Khởi tạo model Gemini 3.6 Flash để tối ưu hóa việc phân tích quy trình
     genai.configure(api_key=api_key)
     # model = genai.GenerativeModel('gemini-3.6-flash')
-    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    model = genai.GenerativeModel('gemini-flash-lite-latest')
     
     # ... (Giữ nguyên toàn bộ phần System Prompt và Exception handling cũ) ...
     
