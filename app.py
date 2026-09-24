@@ -20,6 +20,15 @@ def main():
         "<p style='text-align: center; color: gray; font-size: 13px;'>Developed by Nobita</p>", 
         unsafe_allow_html=True
     )
+    
+    # Load Secrets
+    try:
+        GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+        SHEET_URL_GAMEGATE = st.secrets["SHEET_URL_GAMEGATE"]
+        SHEET_URL_BTC = st.secrets["SHEET_URL_BTC"]
+    except KeyError:
+        st.error("⚠️ Missing Configuration trong Streamlit Secrets!")
+        st.stop()
 
     # ---------------------------------------------------------
     # QC DIAGNOSTIC TOOL: FETCH AVAILABLE MODELS
@@ -46,15 +55,6 @@ def main():
         st.sidebar.error(f"Lỗi fetch list model: {str(e)}")
     # ---------------------------------------------------------
     
-    # Load Secrets
-    try:
-        GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-        SHEET_URL_GAMEGATE = st.secrets["SHEET_URL_GAMEGATE"]
-        SHEET_URL_BTC = st.secrets["SHEET_URL_BTC"]
-    except KeyError:
-        st.error("⚠️ Missing Configuration trong Streamlit Secrets!")
-        st.stop()
-
     # Xử lý State & Cache độc lập cho từng team để tránh Data mix-up
     current_team_key = "gamegate" if team_selection == "Team GameGate" else "btc"
     
