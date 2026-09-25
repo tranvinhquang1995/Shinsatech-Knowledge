@@ -34,6 +34,7 @@ def clean_streamlit_ui():
 
 # Setup Config giao diện (Đã bật layout wide để UI thoáng hơn)
 st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout="wide")
+clean_streamlit_ui()
 
 # ---------------------------------------------------------
 # UI RENDERING: SIDEBAR ROUTING (ĐIỀU HƯỚNG TEAM & TRANG TRÍ)
