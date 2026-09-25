@@ -54,4 +54,4 @@ def get_gamegate_chat_session(api_key: str, context: str):
             temperature=0.2, # Chốt requirement temperature 0.2
         )
     )
-    return chat_session
+    return client, chat_session
