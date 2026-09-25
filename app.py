@@ -67,8 +67,13 @@ current_hash = hash(current_data)
 if st.session_state.get("chat_session") is None or st.session_state.get(hash_key) != current_hash:
     with st.spinner(f"Đang đồng bộ Knowledge Base mới nhất của team {selected_team}..."):
         try:
-            st.session_state.chat_session = init_session_func(api_key, current_data)
+            # Hứng cả client và chat_session từ module, ném vào st.session_state để chống Garbage Collection
+            api_client, chat_session = init_session_func(api_key, current_data)
+            
+            st.session_state.api_client = api_client 
+            st.session_state.chat_session = chat_session
             st.session_state[hash_key] = current_hash
+            
         except Exception as e:
             st.error(f"❌ Lỗi boot hệ thống AI: {str(e)}")
             st.stop()
