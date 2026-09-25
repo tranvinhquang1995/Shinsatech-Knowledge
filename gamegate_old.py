@@ -20,12 +20,9 @@ def fetch_gamegate_data(sheet_url: str) -> str:
         return f"Error Fetching GameGate Data: {str(e)}"
 
 def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> str:
-    # Khởi tạo model Gemini 3.6 Flash để tối ưu hóa việc phân tích quy trình
     genai.configure(api_key=api_key)
-    # model = genai.GenerativeModel('gemini-3.6-flash')
     model = genai.GenerativeModel('gemini-flash-lite-latest')
     
-    # ... (Giữ nguyên toàn bộ phần System Prompt và Exception handling cũ) ...
     system_prompt = f"""
     Bạn là Shinsa, trợ lý ảo của team GameGate.
     Bạn CHỈ ĐƯỢC PHÉP sử dụng thông tin trong phần [NGUỒN DỮ LIỆU GAMEGATE] dưới đây.
@@ -66,8 +63,6 @@ def generate_gamegate_answer(api_key: str, context: str, user_question: str) -> 
         return response.text
     except Exception as e:
         error_msg = str(e)
-        # Catch riêng lỗi Rate Limit (429) để báo cho user
         if "429" in error_msg or "quota" in error_msg.lower():
             return "⚠️ Shinsa đang tiếp nhận quá nhiều câu hỏi cùng lúc (Quá tải). Bạn vui lòng chờ khoảng 1 phút rồi hỏi lại nhé!"
-        # Catch các lỗi hệ thống khác
         return f"System Error: Đã xảy ra lỗi kết nối. Detail: {error_msg}"
