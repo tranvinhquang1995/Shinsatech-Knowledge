@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from google.genai.errors import APIError
 from gamegate import fetch_gamegate_data, get_gamegate_chat_session
 from btc import fetch_btc_data, get_btc_chat_session
+from shinsatech import fetch_shinsatech_data, get_shinsatech_chat_session
 
 # Load biến môi trường
 load_dotenv()
@@ -15,7 +16,7 @@ st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout=
 # UI RENDERING: SIDEBAR ROUTING (ĐIỀU HƯỚNG TEAM & TRANG TRÍ)
 # ---------------------------------------------------------
 st.sidebar.title("⚙️ Workspace")
-selected_team = st.sidebar.selectbox("Bạn là member của team:", ["GameGate", "BTC"])
+selected_team = st.sidebar.selectbox("Bạn là member của team:", ["Shinsatech", "GameGate", "BTC"])
 
 st.sidebar.divider() # Dòng kẻ phân cách
 
@@ -58,6 +59,12 @@ if st.session_state.get("current_team") != selected_team:
 # CACHING MODULE: ISOLATED TTL (BỘ NHỚ ĐỆM TÁCH BIỆT)
 # ---------------------------------------------------------
 @st.cache_data(ttl=3600)
+def get_cached_btc_data():
+    sheet_url = os.getenv("SHEET_URL_SHINSATECH")
+    if not sheet_url: return "ERROR: Thiếu biến SHEET_URL_SHINSATECH"
+    return fetch_shinsatech_data(sheet_url)
+
+@st.cache_data(ttl=3600)
 def get_cached_gamegate_data():
     sheet_url = os.getenv("SHEET_URL_GAMEGATE")
     if not sheet_url: return "ERROR: Thiếu biến SHEET_URL_GAMEGATE"
@@ -77,7 +84,11 @@ if not api_key:
     st.error("⚠️ [QC Alert] Thiếu biến môi trường GEMINI_API_KEY")
     st.stop()
 
-if selected_team == "GameGate":
+if selected_team == "Shinsatech":
+    current_data = get_cached_shinsatech_data()
+    init_session_func = get_shinsatech_chat_session
+    hash_key = "hash_shinsatech"
+elif selected_team == "GameGate":
     current_data = get_cached_gamegate_data()
     init_session_func = get_gamegate_chat_session
     hash_key = "hash_gamegate"
