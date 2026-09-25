@@ -6,25 +6,21 @@ from gamegate import fetch_gamegate_data, get_gamegate_chat_session
 from btc import fetch_btc_data, get_btc_chat_session
 from shinsatech import fetch_shinsatech_data, get_shinsatech_chat_session
 
-# Load biến môi trường
 load_dotenv()
 
-# Setup Config giao diện (Đã bật layout wide để UI thoáng hơn)
 st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout="wide")
 
 # ---------------------------------------------------------
-# UI RENDERING: SIDEBAR ROUTING (ĐIỀU HƯỚNG TEAM & TRANG TRÍ)
+# UI RENDERING: SIDEBAR ROUTING
 # ---------------------------------------------------------
 st.sidebar.title("⚙️ Workspace")
 selected_team = st.sidebar.selectbox("Bạn là member của team:", ["Shinsatech", "GameGate", "BTC"])
 
-st.sidebar.divider() # Dòng kẻ phân cách
+st.sidebar.divider()
 
-# Trang trí thêm phần System Status (Tăng độ xịn sò)
 st.sidebar.caption("🔧 **System Status:** 🟢 Online")
 
-# Footer Copyright (Requirement của sếp Nobita)
-st.sidebar.markdown("<br>" * 15, unsafe_allow_html=True) # Đẩy copyright xuống đáy
+st.sidebar.markdown("<br>" * 15, unsafe_allow_html=True)
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='text-align: center; color: gray; font-size: 0.8em;'>Developed by <b>Nobita</b></p>", unsafe_allow_html=True)
 
@@ -33,10 +29,8 @@ st.sidebar.markdown("<p style='text-align: center; color: gray; font-size: 0.8em
 # ---------------------------------------------------------
 st.title(f"🤖 Shinsa - {selected_team}")
 
-# Lời chào thân thiện (Dynamic theo team)
 st.markdown(f"*> 👋 Xin chào các bạn **{selected_team}**! Hôm nay mọi người cần Shinsa support việc gì nào?*")
 
-# Expander hướng dẫn sử dụng (Trang trí cho UI đỡ trống)
 with st.expander("💡 Mẹo tương tác với Shinsa (Click để xem)"):
     st.markdown("""
     - **Nhớ chọn đúng Workspace ở side-menu để được hỗ trợ thông tin chính xác nhất bạn nhé**
@@ -50,14 +44,13 @@ st.divider()
 # ---------------------------------------------------------
 # LOGIC: STATE MANAGEMENT & CROSS-TALK PREVENTION
 # ---------------------------------------------------------
-# Bắt buộc xóa Session AI cũ khi đổi Team
 if st.session_state.get("current_team") != selected_team:
     st.session_state.messages = []
     st.session_state.current_team = selected_team
     st.session_state.chat_session = None 
 
 # ---------------------------------------------------------
-# CACHING MODULE: ISOLATED TTL (BỘ NHỚ ĐỆM TÁCH BIỆT)
+# CACHING MODULE: ISOLATED TTL
 # ---------------------------------------------------------
 @st.cache_data(ttl=3600)
 def get_cached_shinsatech_data():
@@ -102,7 +95,6 @@ if "ERROR" in current_data:
     st.error(f"⚠️ [QC Alert] Lỗi hệ thống: {current_data}")
     st.stop()
 
-# Cơ chế Reload AI Session 
 current_hash = hash(current_data)
 if st.session_state.get("chat_session") is None or st.session_state.get(hash_key) != current_hash:
     with st.spinner(f"⏳ Đang nạp Knowledge Base mới nhất của {selected_team}..."):
