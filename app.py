@@ -9,6 +9,29 @@ from shinsatech import fetch_shinsatech_data, get_shinsatech_chat_session
 # Load biến môi trường
 load_dotenv()
 
+def clean_streamlit_ui():
+    """
+    Tool dọn dẹp giao diện (Clean UI) cho Streamlit App.
+    Save effort cho team, loại bỏ các nút rác từ Streamlit Cloud (Fork, Github, Watermark).
+    Chỉ giữ lại menu '...' mặc định để thao tác Clear Cache.
+    """
+    hide_ui_style = """
+        <style>
+        /* 1. Ẩn nút Fork, GitHub và Deploy trên Header (Góc trên phải) */
+        .stDeployButton {display: none !important;}
+        [data-testid="stToolbar"] a {display: none !important;}
+        .viewerBadge_container__1QSob {display: none !important;}
+        
+        /* 2. Ẩn Footer mặc định của Streamlit chứa watermark */
+        footer {visibility: hidden !important;}
+        
+        /* 3. Ẩn logo Manage App / Watermark ở góc dưới cùng bên phải */
+        [data-testid="stLogo"] {display: none !important;}
+        #st-toast-container {display: none !important;}
+        </style>
+    """
+    st.markdown(hide_ui_style, unsafe_allow_html=True)
+
 # Setup Config giao diện (Đã bật layout wide để UI thoáng hơn)
 st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout="wide")
 
