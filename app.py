@@ -21,16 +21,6 @@ def aggressive_clean_ui():
         header {visibility: hidden; display: none !important;}
         div[data-testid="stToolbar"] {visibility: hidden; display: none !important;}
         div[data-testid="stDecoration"] {display: none !important;}
-        
-        /* Xóa Footer mặc định */
-        footer {visibility: hidden; display: none !important;}
-        
-        /* Bonus: Cố gắng chèn thêm CSS để đè các iframe quảng cáo (hên xui tùy đợt update của Cloud) */
-        iframe[title="streamlit-badge"], iframe[src*="badge"] {
-            display: none !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
         </style>
     """, unsafe_allow_html=True)
 
