@@ -9,50 +9,6 @@ from shinsatech import fetch_shinsatech_data, get_shinsatech_chat_session
 # Load biến môi trường
 load_dotenv()
 
-def clean_streamlit_ui():
-    """
-    Tool dọn dẹp giao diện (Clean UI) Version 2.
-    QC Note: Dùng CSS Selector mạnh tay (Target thẳng Attribute và Iframe) 
-    để ép Streamlit Cloud phải ẩn các Component rác.
-    """
-    hide_ui_style = """
-        <style>
-        /* 1. DỌN DẸP GÓC TRÊN PHẢI (Toolbar) */
-        /* Ẩn tất cả các thẻ <a> (chứa link Fork, Github) trong khu vực Toolbar */
-        [data-testid="stToolbar"] a {
-            display: none !important;
-        }
-        /* Ẩn nút Deploy mặc định (nếu có) */
-        .stDeployButton {
-            display: none !important;
-        }
-        
-        /* 2. DỌN DẸP GÓC DƯỚI PHẢI (Manage App Watermark) */
-        /* Streamlit Cloud thường nhúng 1 thẻ Iframe chìm để chứa cục Manage App */
-        iframe[title="streamlit-badge"], 
-        iframe[src*="badge"] {
-            display: none !important;
-        }
-        /* Chặn các class động đặc thù của cái cục Manage App (hình vương miện/đám mây) */
-        .viewerBadge_container__1QSob,
-        .viewerBadge_link__1S137,
-        .viewerBadge_text__1JaDK {
-            display: none !important;
-        }
-        /* Chặn luôn id đặc thù của container góc dưới */
-        #st-toast-container {
-            display: none !important;
-        }
-
-        /* 3. DỌN DẸP FOOTER */
-        /* Ẩn dòng "Made with Streamlit" dưới cùng */
-        footer {
-            visibility: hidden !important;
-        }
-        </style>
-    """
-    st.markdown(hide_ui_style, unsafe_allow_html=True)
-
 # Setup Config giao diện (Đã bật layout wide để UI thoáng hơn)
 st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout="wide")
 clean_streamlit_ui()
