@@ -1,0 +1,8 @@
+[client]
+# Root Fix: Chuyển thanh công cụ sang chế độ tối giản. 
+# Sẽ dọn sạch các nút Developer (Fork, Github, Print...) và chỉ giữ lại menu dấu "..."
+toolbarMode = "minimal"
+
+[server]
+# Chặn cảnh báo không cần thiết trên UI
+headless = true
