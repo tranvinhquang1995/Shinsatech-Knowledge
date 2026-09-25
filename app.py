@@ -59,7 +59,7 @@ if st.session_state.get("current_team") != selected_team:
 # CACHING MODULE: ISOLATED TTL (BỘ NHỚ ĐỆM TÁCH BIỆT)
 # ---------------------------------------------------------
 @st.cache_data(ttl=3600)
-def get_cached_btc_data():
+def get_cached_shinsatech_data():
     sheet_url = os.getenv("SHEET_URL_SHINSATECH")
     if not sheet_url: return "ERROR: Thiếu biến SHEET_URL_SHINSATECH"
     return fetch_shinsatech_data(sheet_url)
