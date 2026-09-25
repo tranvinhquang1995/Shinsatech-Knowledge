@@ -47,7 +47,7 @@ system_prompt = f"""
     """
     
     # Khởi tạo session chat để lưu lịch sử hỏi đáp
-    chat_session = client.chats.create(
+chat_session = client.chats.create(
         model=model_name,
         config=types.GenerateContentConfig(
             system_instruction=system_prompt,
