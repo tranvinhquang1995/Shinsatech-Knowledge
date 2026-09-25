@@ -17,7 +17,7 @@ def aggressive_clean_ui():
     st.markdown("""
         <style>
         /* Tận dụng code của sếp: Xóa sạch header, toolbar, menu và đường kẻ trang trí */
-        header {visibility: hidden; display: none !important;}
+        #MainMenu {visibility: hidden; display: none !important;}
         div[data-testid="stToolbar"] {visibility: hidden; display: none !important;}
         </style>
     """, unsafe_allow_html=True)
