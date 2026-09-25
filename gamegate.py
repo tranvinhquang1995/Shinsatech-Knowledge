@@ -46,12 +46,11 @@ def get_gamegate_chat_session(api_key: str, context: str):
         6. Đối với Module / Category là Template thì bạn BẮT BUỘC phải xuất TRỌN VẸN VÀ CHÍNH XÁC cấu trúc Markdown được định nghĩa trong dữ liệu ô Detailed Process, tuyệt đối không được tự ý lược bỏ, thay đổi vị trí xuống dòng, hay viết lại định dạng (format).
         """
     
-    # Khởi tạo session chat để lưu lịch sử hỏi đáp
     chat_session = client.chats.create(
         model=model_name,
         config=types.GenerateContentConfig(
             system_instruction=system_prompt,
-            temperature=0.2, # Chốt requirement temperature 0.2
+            temperature=0.2,
         )
     )
     return client, chat_session
