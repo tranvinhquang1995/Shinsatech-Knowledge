@@ -30,7 +30,7 @@ st.sidebar.markdown("<p style='text-align: center; color: gray; font-size: 0.8em
 # ---------------------------------------------------------
 # UI RENDERING: MAIN CHAT AREA (TITLE & GREETING)
 # ---------------------------------------------------------
-st.title(f"🤖 Shinsa AI - {selected_team}")
+st.title(f"🤖 Shinsa - {selected_team}")
 
 # Lời chào thân thiện (Dynamic theo team)
 st.markdown(f"*> 👋 Xin chào các bạn **{selected_team}**! Hôm nay mọi người cần Shinsa support việc gì nào?*")
@@ -110,7 +110,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input(f"Nhập yêu cầu cho Shinsa {selected_team}"):
+if prompt := st.chat_input(f"Nhập yêu cầu cho Shinsa-{selected_team} nha"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
