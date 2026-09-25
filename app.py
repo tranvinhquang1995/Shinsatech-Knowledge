@@ -39,6 +39,7 @@ st.markdown(f"*> 👋 Xin chào các bạn **{selected_team}**! Hôm nay mọi n
 # Expander hướng dẫn sử dụng (Trang trí cho UI đỡ trống)
 with st.expander("💡 Mẹo tương tác với Shinsa (Click để xem)"):
     st.markdown("""
+    - **Nhớ chọn đúng Workspace ở side-menu để được hỗ trợ thông tin chính xác nhất bạn nhé**
     - **Lấy Template:** Gõ *"Cho xin template báo cáo daily"*.
     - **Check Quy trình:** Gõ *"Quy trình test alive là gì?"*.
     - Shinsa cũng biết được pass Wifi luôn đó nhé!
