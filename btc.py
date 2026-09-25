@@ -54,7 +54,7 @@ def get_btc_chat_session(api_key: str, context: str):
             temperature=0.2, 
         )
     )
-    return chat_session
+return chat_session
 
 '''
 import pandas as pd
