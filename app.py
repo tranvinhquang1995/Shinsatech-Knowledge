@@ -9,8 +9,34 @@ from shinsatech import fetch_shinsatech_data, get_shinsatech_chat_session
 # Load biến môi trường
 load_dotenv()
 
+def aggressive_clean_ui():
+    """
+    Workaround: Ép ẩn toàn bộ Header và Footer.
+    Lưu ý (Risk): Sẽ mất luôn menu dấu '...', bù lại UI siêu sạch ở góc trên.
+    """
+    st.markdown("""
+        <style>
+        /* Tận dụng code của sếp: Xóa sạch header, toolbar, menu và đường kẻ trang trí */
+        #MainMenu {visibility: hidden; display: none !important;}
+        header {visibility: hidden; display: none !important;}
+        div[data-testid="stToolbar"] {visibility: hidden; display: none !important;}
+        div[data-testid="stDecoration"] {display: none !important;}
+        
+        /* Xóa Footer mặc định */
+        footer {visibility: hidden; display: none !important;}
+        
+        /* Bonus: Cố gắng chèn thêm CSS để đè các iframe quảng cáo (hên xui tùy đợt update của Cloud) */
+        iframe[title="streamlit-badge"], iframe[src*="badge"] {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
 # Setup Config giao diện (Đã bật layout wide để UI thoáng hơn)
 st.set_page_config(page_title="Shinsa - QC Assistant", page_icon="🤖", layout="wide")
+aggressive_clean_ui()
 
 # ---------------------------------------------------------
 # UI RENDERING: SIDEBAR ROUTING (ĐIỀU HƯỚNG TEAM & TRANG TRÍ)
